@@ -31,14 +31,6 @@ menu:
     文章归档:
         - /archive.html
         - icon-container
-    我的朋友:
-        - /PY.html
-    给我赞助:
-        - https://space.bilibili.com/402574397?spm_id_from=333.337.0.0
-        - icon-coffee
-    关于博主:
-        - https://space.bilibili.com/402574397?spm_id_from=333.337.0.0
-        - icon-info-circle
 
 widgets:
     - name: search
