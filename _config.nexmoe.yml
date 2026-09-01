@@ -1,6 +1,6 @@
-avatar: https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/avatar.png # 网站 Logo
+avatar: https://cdn.phototourl.com/free/2026-09-01-a64de483-2c41-41ee-9f44-a939ced7b753.jpg # 网站 Logo
 background: # 既是博客的背景，又是文章默认头图
-    path: https://i.dawnlab.me/b5a7e61560facdd5b8aa9683fce147d7.png
+    path: https://cdn.phototourl.com/free/2026-09-01-a64de483-2c41-41ee-9f44-a939ced7b753.jpg
     width: 1280
     height: 726
 favicon:
@@ -34,10 +34,10 @@ menu:
     我的朋友:
         - /PY.html
     给我赞助:
-        - https://nexmoe.com/donate.html
+        - https://space.bilibili.com/402574397?spm_id_from=333.337.0.0
         - icon-coffee
     关于博主:
-        - https://i.nexmoe.com/
+        - https://space.bilibili.com/402574397?spm_id_from=333.337.0.0
         - icon-info-circle
 
 widgets:
@@ -108,7 +108,7 @@ widgets:
       options: 
         widgetLink: #链接组件
             - title: 折影轻梦
-              img: https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/avatar.png
+              img: https://cdn.phototourl.com/free/2026-09-01-a64de483-2c41-41ee-9f44-a939ced7b753.jpg
               link : https://nexmoe.com/
 
 copyTip: "著作权归作者所有。\n商业转载请联系作者获得授权，非商业转载请注明出处。\n来源：%url" # 自定义复制版权文案,使用 %url 代替当前页面URL, 修改为false禁用
