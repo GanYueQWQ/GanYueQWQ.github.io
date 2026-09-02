@@ -109,6 +109,17 @@ slotHead: |
     gtag("config", "G-4D4ZJ9G024");
   </script>
 
+  <!-- MathJax v2 (配合 hexo-filter-mathjax) + amsmath 扩展 -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: { inlineMath: [['$','$']], displayMath: [['$$','$$']], processEscapes: true },
+      TeX: { extensions: ['AMSmath.js', 'AMSsymbols.js', 'mathchoice.js'] },
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    });
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
 slotFooter: | 
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2058306854838448" crossorigin="anonymous"></script>
 
