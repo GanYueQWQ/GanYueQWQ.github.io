@@ -102,3 +102,13 @@ theme: nexmoe
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: ''
+
+# MathJax (hexo-filter-mathjax 服务端渲染)
+# tags: 'ams' 启用 amsmath 扩展,支持 \operatorname 等指令
+mathjax:
+  tags: ams
+  single_dollars: true
+  append_css: true
+  every_page: false
+  cjk_width: 0.9
+  normal_width: 0.6
