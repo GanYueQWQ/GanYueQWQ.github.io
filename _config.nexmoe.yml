@@ -1,6 +1,6 @@
 avatar: https://cdn.phototourl.com/free/2026-09-01-a64de483-2c41-41ee-9f44-a939ced7b753.jpg # 网站 Logo
 background: # 既是博客的背景，又是文章默认头图
-    path:https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEaV85ql-FZEcksbsLHks9OM2qirsCVGQACfi0AAm9BwFQUBR_2Q23lpD0E.jpg
+    path: https://cdn.phototourl.com/free/2026-09-01-a64de483-2c41-41ee-9f44-a939ced7b753.jpg
     width: 1280
     height: 726
 favicon:
@@ -15,7 +15,7 @@ function: # 功能开关，可选值（true,false）
 imageCDN: # 图片 CDN 功能
   enable: false # 开启该功能  
   origin: /../../images/ # 图片原始目录
-  to: https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/ # 图片 CDN 域名
+  to: https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEaV85ql-FZEcksbsLHks9OM2qirsCVGQACfi0AAm9BwFQUBR_2Q23lpD0E.jpg # 图片 CDN 域名
 
 # 自定义样式，启用后可在站点的source文件夹下新建custom.css自定义站点样式
 customStyles:
@@ -120,7 +120,7 @@ slotSidebar:
 slotComment: |
   请在你的配置文件中设置 slotComment
 
-slotCopyright: |
-  <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+# slotCopyright: |
+#   <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
 
 slotArticleEnd:
