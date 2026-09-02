@@ -16,12 +16,20 @@ function search() {
 // catalog
 document.querySelectorAll('a.toc-link').forEach(item => {
     item.addEventListener('click', function(ev) {
+        const href = this.getAttribute('href');
+        const id = decodeURIComponent(href.slice(1));
+        const target = document.getElementById(id);
+
+        if (!target) {
+            return;
+        }
+
         ev.preventDefault();
-        const title = this.getAttribute('href');
         window.scroll({
-            top: document.querySelector(decodeURI(title)).offsetTop - 24,
+            top: target.getBoundingClientRect().top + window.scrollY - 24,
             behavior: 'smooth'
         });
+        history.replaceState(null, '', href);
     });
 });
 
