@@ -1,0 +1,4 @@
+interface:
+  display_name: "高密度课程笔记"
+  short_description: "融合手写提纲与教师讲稿，整理成高密度且有启发性的课程笔记"
+  default_prompt: "使用 $high-density-course-notes，将我的手写笔记和教师讲稿整理成适合博客发布的完整课程笔记。"
