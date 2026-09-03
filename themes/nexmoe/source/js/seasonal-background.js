@@ -66,8 +66,8 @@
 
   function resetParticles() {
     var compact = window.innerWidth < 720;
-    var count = compact ? 20 : 42;
-    if (season === 'summer') count = compact ? 14 : 28;
+    var count = compact ? 44 : 96;
+    if (season === 'summer') count = compact ? 32 : 64;
     particles = Array.from({ length: count }, function () { return makeParticle(false); });
   }
 
@@ -107,21 +107,21 @@
   }
 
   function animate(time) {
-    var delta = Math.min((time - lastTime) / 1000, 0.05);
+    var delta = Math.min((time - lastTime) / 1000, 0.034);
     lastTime = time;
     context.clearRect(0, 0, width, height);
     depthX += (targetX - depthX) * 0.055;
     depthY += (targetY - depthY) * 0.055;
-    document.documentElement.style.setProperty('--season-layer-x', (depthX * 5).toFixed(2) + 'px');
-    document.documentElement.style.setProperty('--season-layer-y', (depthY * 4).toFixed(2) + 'px');
-    document.documentElement.style.setProperty('--season-bg-x', (depthX * -11).toFixed(2) + 'px');
-    document.documentElement.style.setProperty('--season-bg-y', (depthY * -8).toFixed(2) + 'px');
+    if (Math.abs(targetX - depthX) > 0.001 || Math.abs(targetY - depthY) > 0.001) {
+      document.documentElement.style.setProperty('--season-bg-x', (depthX * -11).toFixed(2) + 'px');
+      document.documentElement.style.setProperty('--season-bg-y', (depthY * -8).toFixed(2) + 'px');
+    }
 
     particles.forEach(function (particle) {
       particle.phase += particle.spin * delta;
-      var pulse = 0.7 + Math.sin(time * 0.0016 + particle.phase) * 0.3;
-      var x = particle.x + Math.sin(particle.phase * 1.7) * particle.drift;
-      var y = particle.y;
+      var pulse = season === 'summer' ? 0.88 + Math.sin(time * 0.0009 + particle.phase) * 0.12 : 1;
+      var x = particle.x + Math.sin(particle.phase * 1.7) * particle.drift + depthX * 5;
+      var y = particle.y + depthY * 4;
 
       if (season === 'summer') {
         particle.x += Math.sin(particle.phase) * particle.speed * delta;
