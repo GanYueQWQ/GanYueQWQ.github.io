@@ -6,9 +6,20 @@
 #seasonal-background[data-season="summer"] .seasonal-glow { background: radial-gradient(circle at 72% 18%, rgba(255,221,114,.24), transparent 30%), radial-gradient(circle at 20% 78%, rgba(80,181,127,.2), transparent 38%); }
 #seasonal-background[data-season="autumn"] .seasonal-glow { background: radial-gradient(circle at 78% 20%, rgba(238,139,56,.3), transparent 34%), radial-gradient(circle at 14% 76%, rgba(165,70,48,.2), transparent 38%); }
 #seasonal-background[data-season="winter"] .seasonal-glow { background: radial-gradient(circle at 74% 16%, rgba(172,215,255,.28), transparent 34%), radial-gradient(circle at 18% 82%, rgba(231,244,255,.25), transparent 38%); }
-.seasonal-particles { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .92; }
+.seasonal-depth { position: absolute; inset: 0; transition: transform .2s ease-out; }
+.seasonal-particle { position: absolute; display: block; left: var(--particle-x); width: var(--particle-size); height: var(--particle-size); opacity: var(--particle-alpha); backface-visibility: hidden; }
+#seasonal-background:not([data-season="summer"]) .seasonal-particle { top: -9vh; animation: seasonal-fall var(--particle-duration) linear var(--particle-delay) infinite; }
+#seasonal-background[data-season="spring"] .seasonal-particle { width: calc(var(--particle-size) * 1.7); height: var(--particle-size); border-radius: 70% 30% 65% 35%; background: rgba(255,174,205,.78); }
+#seasonal-background[data-season="summer"] .seasonal-particle { top: var(--particle-y); border-radius: 50%; background: rgba(255,235,143,.86); box-shadow: 0 0 5px rgba(255,235,143,.72), 0 0 11px rgba(190,255,176,.34); animation: seasonal-float var(--particle-duration) ease-in-out var(--particle-delay) infinite; }
+#seasonal-background[data-season="autumn"] .seasonal-particle { width: calc(var(--particle-size) * 1.55); height: calc(var(--particle-size) * .72); border-radius: 62% 38% 58% 42%; background: rgba(226,124,53,.76); }
+#seasonal-background[data-season="autumn"] .seasonal-depth-2 .seasonal-particle { background: rgba(247,181,76,.76); }
+#seasonal-background[data-season="autumn"] .seasonal-depth-3 .seasonal-particle { background: rgba(183,78,43,.74); }
+#seasonal-background[data-season="winter"] .seasonal-particle { border-radius: 50%; background: rgba(242,249,255,.9); box-shadow: 0 0 4px rgba(194,225,255,.42); }
+@keyframes seasonal-fall { from { transform: translate3d(0, -8vh, 0) rotate(0deg); } to { transform: translate3d(var(--particle-drift), 120vh, 0) rotate(var(--particle-turn)); } }
+@keyframes seasonal-float { 0%, 100% { transform: translate3d(-12px, 12px, 0); } 50% { transform: translate3d(var(--particle-drift), -28px, 0); } }
 @media (prefers-reduced-motion: reduce) {
   #nexmoe-background .nexmoe-bg { transform: none; }
+  .seasonal-depth, .seasonal-particle { animation: none !important; transition: none !important; }
 }
 .course-materials-page article { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; }
 .materials-hero { display: flex; justify-content: space-between; gap: 24px; align-items: flex-end; padding: 8px 0 28px; border-bottom: 1px solid rgba(127,127,127,.18); }

@@ -2,171 +2,104 @@
   'use strict';
 
   function initSeasonalBackground() {
+    var host = document.getElementById('nexmoe-background');
+    if (!host || document.getElementById('seasonal-background')) return;
 
-  var host = document.getElementById('nexmoe-background');
-  if (!host) return;
+    var month = new Date().getMonth() + 1;
+    var season = month >= 3 && month <= 5 ? 'spring'
+      : month >= 6 && month <= 8 ? 'summer'
+        : month >= 9 && month <= 11 ? 'autumn' : 'winter';
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var compact = window.innerWidth < 720;
 
-  var month = new Date().getMonth() + 1;
-  var season = month >= 3 && month <= 5 ? 'spring'
-    : month >= 6 && month <= 8 ? 'summer'
-      : month >= 9 && month <= 11 ? 'autumn' : 'winter';
-  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var layer = document.createElement('div');
+    layer.id = 'seasonal-background';
+    layer.dataset.season = season;
+    layer.setAttribute('aria-hidden', 'true');
 
-  var layer = document.createElement('div');
-  layer.id = 'seasonal-background';
-  layer.dataset.season = season;
-  layer.setAttribute('aria-hidden', 'true');
-  var glow = document.createElement('div');
-  glow.className = 'seasonal-glow';
-  layer.appendChild(glow);
-  host.appendChild(layer);
+    var glow = document.createElement('div');
+    glow.className = 'seasonal-glow';
+    layer.appendChild(glow);
 
-  if (reducedMotion) return;
+    var depths = compact ? [18, 16, 14] : [32, 30, 26];
+    var depthLayers = [];
 
-  var canvas = document.createElement('canvas');
-  canvas.className = 'seasonal-particles';
-  layer.appendChild(canvas);
-  var context = canvas.getContext('2d');
-  var particles = [];
-  var width = 0;
-  var height = 0;
-  var ratio = 1;
-  var targetX = 0;
-  var targetY = 0;
-  var depthX = 0;
-  var depthY = 0;
-  var animationId = 0;
-  var lastTime = performance.now();
+    if (!reducedMotion) {
+      depths.forEach(function (count, depthIndex) {
+        var depthLayer = document.createElement('div');
+        depthLayer.className = 'seasonal-depth seasonal-depth-' + (depthIndex + 1);
+        depthLayer.dataset.depth = String(depthIndex + 1);
 
-  var palettes = {
-    spring: ['255,170,199', '255,205,218', '245,151,183'],
-    summer: ['255,226,128', '190,255,176', '255,244,190'],
-    autumn: ['239,144,62', '208,92,45', '247,190,88'],
-    winter: ['235,247,255', '194,225,255', '255,255,255']
-  };
+        for (var index = 0; index < count; index += 1) {
+          depthLayer.appendChild(createParticle(season, depthIndex));
+        }
+
+        depthLayers.push(depthLayer);
+        layer.appendChild(depthLayer);
+      });
+    }
+
+    host.appendChild(layer);
+
+    if (reducedMotion || !depthLayers.length) return;
+
+    var framePending = false;
+    var pointerX = 0;
+    var pointerY = 0;
+
+    function applyParallax() {
+      framePending = false;
+      depthLayers.forEach(function (depthLayer, index) {
+        var strength = (index + 1) * 2.7;
+        depthLayer.style.transform = 'translate3d(' +
+          (pointerX * strength).toFixed(2) + 'px,' +
+          (pointerY * strength * 0.75).toFixed(2) + 'px,0)';
+      });
+    }
+
+    function scheduleParallax() {
+      if (framePending) return;
+      framePending = true;
+      requestAnimationFrame(applyParallax);
+    }
+
+    window.addEventListener('pointermove', function (event) {
+      if (event.pointerType === 'touch') return;
+      pointerX = event.clientX / window.innerWidth * 2 - 1;
+      pointerY = event.clientY / window.innerHeight * 2 - 1;
+      scheduleParallax();
+    }, { passive: true });
+
+    document.documentElement.addEventListener('mouseleave', function () {
+      pointerX = 0;
+      pointerY = 0;
+      scheduleParallax();
+    });
+  }
 
   function random(min, max) {
     return min + Math.random() * (max - min);
   }
 
-  function makeParticle(fromTop) {
-    var isSummer = season === 'summer';
-    return {
-      x: random(0, width),
-      y: fromTop ? random(-height * 0.18, 0) : random(0, height),
-      size: isSummer ? random(1.2, 3.1) : random(1.6, 5.2),
-      speed: isSummer ? random(2, 8) : random(10, season === 'winter' ? 32 : 22),
-      drift: random(-12, 12),
-      phase: random(0, Math.PI * 2),
-      spin: random(-1.2, 1.2),
-      depth: random(0.35, 1.15),
-      color: palettes[season][Math.floor(random(0, palettes[season].length))],
-      alpha: random(0.24, 0.62)
-    };
-  }
+  function createParticle(season, depthIndex) {
+    var particle = document.createElement('span');
+    var duration = season === 'summer'
+      ? random(7, 13)
+      : random(14, 25) - depthIndex * 1.4;
+    var sizeBase = season === 'summer' ? random(2, 4.5) : random(3, 8);
+    var depthScale = 0.68 + depthIndex * 0.2;
+    var alpha = random(0.3, 0.68) + depthIndex * 0.06;
 
-  function resetParticles() {
-    var compact = window.innerWidth < 720;
-    var count = compact ? 44 : 96;
-    if (season === 'summer') count = compact ? 32 : 64;
-    particles = Array.from({ length: count }, function () { return makeParticle(false); });
-  }
-
-  function resize() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    ratio = Math.min(window.devicePixelRatio || 1, 1.5);
-    canvas.width = Math.round(width * ratio);
-    canvas.height = Math.round(height * ratio);
-    canvas.style.width = width + 'px';
-    canvas.style.height = height + 'px';
-    context.setTransform(ratio, 0, 0, ratio, 0, 0);
-    resetParticles();
-  }
-
-  function drawSoftParticle(particle, x, y, pulse) {
-    context.beginPath();
-    if (season === 'spring') {
-      context.ellipse(x, y, particle.size * 1.5, particle.size * 0.72, particle.phase, 0, Math.PI * 2);
-    } else if (season === 'autumn') {
-      context.ellipse(x, y, particle.size * 1.3, particle.size * 0.58, particle.phase, 0, Math.PI * 2);
-    } else {
-      context.arc(x, y, particle.size * pulse, 0, Math.PI * 2);
-    }
-    context.fillStyle = 'rgba(' + particle.color + ',' + particle.alpha * pulse + ')';
-    context.fill();
-  }
-
-  function drawFirefly(particle, x, y, pulse) {
-    var radius = particle.size * 6 * pulse;
-    context.beginPath();
-    context.arc(x, y, radius, 0, Math.PI * 2);
-    context.fillStyle = 'rgba(' + particle.color + ',' + particle.alpha * 0.12 + ')';
-    context.fill();
-    context.beginPath();
-    context.arc(x, y, Math.max(1, particle.size * pulse), 0, Math.PI * 2);
-    context.fillStyle = 'rgba(' + particle.color + ',' + particle.alpha + ')';
-    context.fill();
-  }
-
-  function animate(time) {
-    var delta = Math.min((time - lastTime) / 1000, 0.034);
-    lastTime = time;
-    context.clearRect(0, 0, width, height);
-    depthX += (targetX - depthX) * 0.055;
-    depthY += (targetY - depthY) * 0.055;
-
-    particles.forEach(function (particle) {
-      particle.phase += particle.spin * delta;
-      var pulse = season === 'summer' ? 0.88 + Math.sin(time * 0.0009 + particle.phase) * 0.12 : 1;
-      var depthScale = 0.65 + particle.depth * 0.45;
-      var x = particle.x + Math.sin(particle.phase * 1.7) * particle.drift + depthX * 9 * particle.depth;
-      var y = particle.y + depthY * 7 * particle.depth;
-
-      if (season === 'summer') {
-        particle.x += Math.sin(particle.phase) * particle.speed * delta;
-        particle.y += Math.cos(particle.phase * 0.7) * particle.speed * delta;
-        drawFirefly(particle, x, y, pulse * depthScale);
-        if (particle.x < -30) particle.x = width + 30;
-        if (particle.x > width + 30) particle.x = -30;
-        if (particle.y < -30) particle.y = height + 30;
-        if (particle.y > height + 30) particle.y = -30;
-      } else {
-        particle.y += particle.speed * delta;
-        particle.x += particle.drift * delta * 0.16;
-        drawSoftParticle(particle, x, y, pulse * depthScale);
-        if (particle.y > height + 16 || particle.x < -24 || particle.x > width + 24) {
-          Object.assign(particle, makeParticle(true));
-        }
-      }
-    });
-
-    animationId = requestAnimationFrame(animate);
-  }
-
-  window.addEventListener('pointermove', function (event) {
-    if (event.pointerType === 'touch') return;
-    targetX = event.clientX / window.innerWidth * 2 - 1;
-    targetY = event.clientY / window.innerHeight * 2 - 1;
-  }, { passive: true });
-
-  document.documentElement.addEventListener('mouseleave', function () {
-    targetX = 0;
-    targetY = 0;
-  });
-
-  window.addEventListener('resize', resize, { passive: true });
-  document.addEventListener('visibilitychange', function () {
-    if (document.hidden) {
-      cancelAnimationFrame(animationId);
-    } else {
-      lastTime = performance.now();
-      animationId = requestAnimationFrame(animate);
-    }
-  });
-
-  resize();
-  animationId = requestAnimationFrame(animate);
+    particle.className = 'seasonal-particle';
+    particle.style.setProperty('--particle-x', random(0, 100).toFixed(2) + 'vw');
+    particle.style.setProperty('--particle-y', random(0, 100).toFixed(2) + 'vh');
+    particle.style.setProperty('--particle-size', (sizeBase * depthScale).toFixed(2) + 'px');
+    particle.style.setProperty('--particle-duration', duration.toFixed(2) + 's');
+    particle.style.setProperty('--particle-delay', (-random(0, duration)).toFixed(2) + 's');
+    particle.style.setProperty('--particle-drift', random(-90, 90).toFixed(1) + 'px');
+    particle.style.setProperty('--particle-turn', random(-260, 260).toFixed(1) + 'deg');
+    particle.style.setProperty('--particle-alpha', Math.min(alpha, 0.82).toFixed(2));
+    return particle;
   }
 
   if (document.readyState === 'loading') {
