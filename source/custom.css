@@ -1,0 +1,76 @@
+.sr-only { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
+.course-materials-page article { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; }
+.materials-hero { display: flex; justify-content: space-between; gap: 24px; align-items: flex-end; padding: 8px 0 28px; border-bottom: 1px solid rgba(127,127,127,.18); }
+.materials-hero h1 { margin: 6px 0 8px; font-size: clamp(2rem, 6vw, 3.35rem); line-height: 1.08; letter-spacing: -.04em; }
+.materials-hero p { margin: 0; max-width: 560px; color: var(--color-text-2); }
+.materials-eyebrow { color: var(--color-primary); font-weight: 800; font-size: .72rem; letter-spacing: .16em; }
+.materials-stats { min-width: 112px; padding: 18px; color: #fff; text-align: center; border-radius: 18px; background: linear-gradient(145deg, var(--color-primary), var(--color2)); box-shadow: 0 12px 28px var(--color-primary-bg); }
+.materials-stats strong, .materials-stats span { display: block; }
+.materials-stats strong { font-size: 2rem; line-height: 1; }
+.materials-stats span { margin-top: 6px; font-size: .78rem; opacity: .86; }
+.materials-toolbar { display: grid; grid-template-columns: minmax(220px, 1fr) 170px 145px; gap: 10px; margin: 24px 0; }
+.materials-toolbar label { position: relative; }
+.materials-toolbar input, .materials-toolbar select { width: 100%; height: 46px; color: var(--color-text-1); border: 1px solid rgba(127,127,127,.22); border-radius: 12px; outline: none; background: var(--color-card); font: inherit; transition: border-color .2s, box-shadow .2s; }
+.materials-toolbar input { padding: 0 14px 0 42px; }
+.materials-toolbar select { padding: 0 34px 0 13px; cursor: pointer; }
+.materials-toolbar input:focus, .materials-toolbar select:focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px var(--color-primary-bg); }
+.materials-search > span[aria-hidden] { position: absolute; z-index: 1; left: 15px; top: 8px; color: var(--color-primary); font-size: 1.45rem; }
+.materials-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.material-card { display: flex; min-width: 0; min-height: 218px; flex-direction: column; padding: 20px; border: 1px solid rgba(127,127,127,.16); border-radius: 18px; background: linear-gradient(150deg, var(--color-card) 62%, var(--color-primary-bg)); box-shadow: 0 8px 22px rgba(70,80,100,.08); transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.material-card:hover { transform: translateY(-3px); border-color: rgba(255,78,106,.32); box-shadow: 0 14px 30px rgba(70,80,100,.14); }
+.material-card[hidden] { display: none; }
+.material-card-top { display: flex; align-items: center; gap: 10px; }
+.material-file-badge { flex: none; min-width: 48px; padding: 5px 8px; border-radius: 8px; color: #fff; background: var(--color6); font-size: .68rem; font-weight: 800; letter-spacing: .04em; text-align: center; }
+.material-file-pdf { background: #ef5350; }
+.material-file-docx, .material-file-doc { background: #2f6fdb; }
+.material-file-pptx, .material-file-ppt { background: #e56a3b; }
+.material-file-xlsx, .material-file-xls { background: #2d936c; }
+.material-file-zip, .material-file-rar, .material-file-7z { background: #7b61b8; }
+.material-course { overflow: hidden; color: var(--color-text-2); font-size: .78rem; white-space: nowrap; text-overflow: ellipsis; }
+.material-card h2 { display: -webkit-box; overflow: hidden; margin: 20px 0 12px; font-size: 1.18rem; line-height: 1.42; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.material-card h2::before, .material-card h2::after { display: none; }
+.material-meta { display: flex; gap: 12px; margin-top: auto; color: var(--color-text-2); font-size: .74rem; }
+.material-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; }
+.material-actions button, .material-actions a { display: inline-flex; min-height: 38px; align-items: center; justify-content: center; padding: 0 14px; border: 0; border-radius: 10px; font: inherit; font-size: .82rem; font-weight: 700; cursor: pointer; text-decoration: none !important; }
+.material-preview { color: #fff; background: var(--color-primary); }
+.material-download { margin-left: auto; color: var(--color-primary); background: var(--color-primary-bg); }
+.material-preview-unavailable { color: var(--color-text-2); font-size: .75rem; }
+.materials-empty, .materials-no-result { margin: 34px 0 6px; padding: 48px 24px; color: var(--color-text-2); text-align: center; border: 1px dashed rgba(127,127,127,.3); border-radius: 18px; background: rgba(127,127,127,.035); }
+.materials-empty strong, .materials-empty p, .materials-no-result strong, .materials-no-result span { display: block; }
+.materials-empty strong, .materials-no-result strong { margin: 10px 0 6px; color: var(--color-text-1); font-size: 1.05rem; }
+.materials-empty p { margin: 0; }
+.materials-empty-icon { display: inline-grid; width: 46px; height: 46px; place-items: center; color: #fff; border-radius: 14px; background: var(--color-primary); font-size: 1.7rem; }
+body.resource-viewer-open { overflow: hidden; }
+.resource-viewer[hidden] { display: none; }
+.resource-viewer { position: fixed; z-index: 12000; inset: 0; display: flex; align-items: center; justify-content: center; padding: 22px; }
+.resource-viewer-backdrop { position: absolute; inset: 0; background: rgba(14,18,28,.72); backdrop-filter: blur(7px); }
+.resource-viewer-panel { position: relative; display: flex; overflow: hidden; width: min(1120px, 100%); height: min(88vh, 900px); flex-direction: column; border-radius: 20px; background: #eceef2; box-shadow: 0 26px 80px rgba(0,0,0,.38); }
+.resource-viewer-panel > header { display: flex; flex: none; align-items: center; justify-content: space-between; gap: 16px; min-height: 68px; padding: 12px 18px; color: #fff; background: #242a36; }
+.resource-viewer-panel > header span, .resource-viewer-panel > header strong { display: block; }
+.resource-viewer-panel > header span { margin-bottom: 2px; color: #aeb7c8; font-size: .7rem; }
+.resource-viewer-panel > header strong { overflow: hidden; max-width: 64vw; white-space: nowrap; text-overflow: ellipsis; }
+.resource-viewer-actions { display: flex; flex: none; align-items: center; gap: 10px; }
+.resource-viewer-actions a, .resource-viewer-actions button { display: inline-grid; min-height: 38px; place-items: center; border: 0; border-radius: 10px; cursor: pointer; }
+.resource-viewer-actions a { padding: 0 14px; color: #fff; background: var(--color-primary); font-size: .8rem; font-weight: 700; }
+.resource-viewer-actions button { width: 38px; color: #fff; background: rgba(255,255,255,.12); font-size: 1.5rem; }
+.resource-viewer-body { overflow: auto; display: flex; min-height: 0; flex: 1; align-items: flex-start; justify-content: center; }
+.resource-viewer-body iframe { width: 100%; height: 100%; border: 0; }
+.resource-viewer-body > img, .resource-viewer-body > video { max-width: 100%; max-height: 100%; margin: auto; }
+.resource-viewer-body > audio { width: min(620px, calc(100% - 40px)); margin: auto; }
+.resource-viewer-body > pre { width: min(900px, calc(100% - 32px)); min-height: calc(100% - 32px); margin: 16px; padding: 24px; color: #222; white-space: pre-wrap; overflow-wrap: anywhere; border-radius: 8px; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,.08); }
+.resource-viewer-body .docx-wrapper { width: 100%; padding: 24px 0; background: #dfe2e7; }
+.resource-viewer-status { position: absolute; z-index: 1; top: 50%; left: 50%; padding: 12px 18px; color: #344054; border-radius: 10px; background: rgba(255,255,255,.94); box-shadow: 0 8px 28px rgba(0,0,0,.14); transform: translate(-50%, -50%); }
+.resource-viewer-status[hidden] { display: none; }
+.resource-viewer-status.is-error { color: #b42318; }
+@media (max-width: 700px) {
+  .materials-hero { align-items: flex-start; }
+  .materials-stats { min-width: 88px; padding: 14px 10px; }
+  .materials-toolbar { grid-template-columns: 1fr 1fr; }
+  .materials-search { grid-column: 1 / -1; }
+  .materials-grid { grid-template-columns: 1fr; }
+  .resource-viewer { padding: 0; }
+  .resource-viewer-panel { width: 100%; height: 100%; border-radius: 0; }
+  .resource-viewer-actions a { display: none; }
+  .resource-viewer-panel > header strong { max-width: 68vw; }
+}
+@media (prefers-reduced-motion: reduce) { .material-card { transition: none; } }

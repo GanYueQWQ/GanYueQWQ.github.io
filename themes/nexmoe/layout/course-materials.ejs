@@ -1,0 +1,99 @@
+<div class="nexmoe-post course-materials-page">
+  <article>
+    <header class="materials-hero">
+      <div>
+        <span class="materials-eyebrow">COURSE LIBRARY</span>
+        <h1>课程资料</h1>
+        <p>集中浏览课程讲义、习题与参考资料，支持在线预览和原文件下载。</p>
+      </div>
+      <div class="materials-stats" aria-label="资料统计">
+        <strong><%= page.resources.length %></strong>
+        <span>份资料</span>
+      </div>
+    </header>
+
+    <section class="materials-toolbar" aria-label="筛选课程资料">
+      <label class="materials-search">
+        <span aria-hidden="true">⌕</span>
+        <span class="sr-only">搜索资料</span>
+        <input id="materials-search" type="search" placeholder="搜索课程或文件名…" autocomplete="off">
+      </label>
+      <label>
+        <span class="sr-only">按课程筛选</span>
+        <select id="materials-course">
+          <option value="">全部课程</option>
+          <% page.courses.forEach(function(course) { %>
+            <option value="<%= course %>"><%= course %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label>
+        <span class="sr-only">按文件类型筛选</span>
+        <select id="materials-type">
+          <option value="">全部类型</option>
+          <% page.types.forEach(function(type) { %>
+            <option value="<%= type %>"><%= type %></option>
+          <% }) %>
+        </select>
+      </label>
+    </section>
+
+    <% if (page.resources.length) { %>
+      <div class="materials-grid" id="materials-grid">
+        <% page.resources.forEach(function(resource) { %>
+          <section class="material-card" data-title="<%= resource.title.toLowerCase() %>" data-course="<%= resource.course %>" data-type="<%= resource.extension %>">
+            <div class="material-card-top">
+              <span class="material-file-badge material-file-<%= resource.extension.toLowerCase() %>"><%= resource.extension %></span>
+              <span class="material-course"><%= resource.course %></span>
+            </div>
+            <h2 title="<%= resource.filename %>"><%= resource.title %></h2>
+            <div class="material-meta">
+              <span><%= resource.size %></span>
+              <span>更新于 <%= resource.updated %></span>
+            </div>
+            <div class="material-actions">
+              <% if (resource.previewType) { %>
+                <button class="material-preview" type="button" data-url="<%= resource.url %>" data-preview="<%= resource.previewType %>" data-name="<%= resource.filename %>">在线预览</button>
+              <% } else { %>
+                <span class="material-preview-unavailable">暂不支持预览</span>
+              <% } %>
+              <a class="material-download" href="<%= resource.url %>" download>下载</a>
+            </div>
+          </section>
+        <% }) %>
+      </div>
+      <div class="materials-no-result" id="materials-no-result" hidden>
+        <strong>没有找到匹配的资料</strong>
+        <span>试试更换关键词或筛选条件。</span>
+      </div>
+    <% } else { %>
+      <div class="materials-empty">
+        <span class="materials-empty-icon" aria-hidden="true">＋</span>
+        <strong>资料库等待上传</strong>
+        <p>把课程文件放入资料目录并重新生成网站后，它们会自动出现在这里。</p>
+      </div>
+    <% } %>
+  </article>
+</div>
+
+<div class="resource-viewer" id="resource-viewer" role="dialog" aria-modal="true" aria-labelledby="resource-viewer-title" hidden>
+  <div class="resource-viewer-backdrop" data-viewer-close></div>
+  <div class="resource-viewer-panel">
+    <header>
+      <div>
+        <span>在线预览</span>
+        <strong id="resource-viewer-title"></strong>
+      </div>
+      <div class="resource-viewer-actions">
+        <a id="resource-viewer-download" download>下载原文件</a>
+        <button type="button" data-viewer-close aria-label="关闭预览">×</button>
+      </div>
+    </header>
+    <div class="resource-viewer-status" id="resource-viewer-status">正在加载…</div>
+    <div class="resource-viewer-body" id="resource-viewer-body"></div>
+  </div>
+</div>
+
+<script src="<%- url_for('lib/course-materials/jszip.min.js') %>"></script>
+<script src="<%- url_for('lib/course-materials/docx-preview.min.js') %>"></script>
+<%- js_auto_version('js/course-materials') %>
