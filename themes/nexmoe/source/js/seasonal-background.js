@@ -59,6 +59,7 @@
       drift: random(-12, 12),
       phase: random(0, Math.PI * 2),
       spin: random(-1.2, 1.2),
+      depth: random(0.35, 1.15),
       color: palettes[season][Math.floor(random(0, palettes[season].length))],
       alpha: random(0.24, 0.62)
     };
@@ -98,12 +99,14 @@
 
   function drawFirefly(particle, x, y, pulse) {
     var radius = particle.size * 6 * pulse;
-    var gradient = context.createRadialGradient(x, y, 0, x, y, radius);
-    gradient.addColorStop(0, 'rgba(' + particle.color + ',' + particle.alpha + ')');
-    gradient.addColorStop(0.24, 'rgba(' + particle.color + ',' + particle.alpha * 0.42 + ')');
-    gradient.addColorStop(1, 'rgba(' + particle.color + ',0)');
-    context.fillStyle = gradient;
-    context.fillRect(x - radius, y - radius, radius * 2, radius * 2);
+    context.beginPath();
+    context.arc(x, y, radius, 0, Math.PI * 2);
+    context.fillStyle = 'rgba(' + particle.color + ',' + particle.alpha * 0.12 + ')';
+    context.fill();
+    context.beginPath();
+    context.arc(x, y, Math.max(1, particle.size * pulse), 0, Math.PI * 2);
+    context.fillStyle = 'rgba(' + particle.color + ',' + particle.alpha + ')';
+    context.fill();
   }
 
   function animate(time) {
@@ -112,21 +115,18 @@
     context.clearRect(0, 0, width, height);
     depthX += (targetX - depthX) * 0.055;
     depthY += (targetY - depthY) * 0.055;
-    if (Math.abs(targetX - depthX) > 0.001 || Math.abs(targetY - depthY) > 0.001) {
-      document.documentElement.style.setProperty('--season-bg-x', (depthX * -11).toFixed(2) + 'px');
-      document.documentElement.style.setProperty('--season-bg-y', (depthY * -8).toFixed(2) + 'px');
-    }
 
     particles.forEach(function (particle) {
       particle.phase += particle.spin * delta;
       var pulse = season === 'summer' ? 0.88 + Math.sin(time * 0.0009 + particle.phase) * 0.12 : 1;
-      var x = particle.x + Math.sin(particle.phase * 1.7) * particle.drift + depthX * 5;
-      var y = particle.y + depthY * 4;
+      var depthScale = 0.65 + particle.depth * 0.45;
+      var x = particle.x + Math.sin(particle.phase * 1.7) * particle.drift + depthX * 9 * particle.depth;
+      var y = particle.y + depthY * 7 * particle.depth;
 
       if (season === 'summer') {
         particle.x += Math.sin(particle.phase) * particle.speed * delta;
         particle.y += Math.cos(particle.phase * 0.7) * particle.speed * delta;
-        drawFirefly(particle, x, y, pulse);
+        drawFirefly(particle, x, y, pulse * depthScale);
         if (particle.x < -30) particle.x = width + 30;
         if (particle.x > width + 30) particle.x = -30;
         if (particle.y < -30) particle.y = height + 30;
@@ -134,7 +134,7 @@
       } else {
         particle.y += particle.speed * delta;
         particle.x += particle.drift * delta * 0.16;
-        drawSoftParticle(particle, x, y, pulse);
+        drawSoftParticle(particle, x, y, pulse * depthScale);
         if (particle.y > height + 16 || particle.x < -24 || particle.x > width + 24) {
           Object.assign(particle, makeParticle(true));
         }
