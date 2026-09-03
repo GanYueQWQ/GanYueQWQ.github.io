@@ -4,7 +4,7 @@
       <div>
         <span class="materials-eyebrow">COURSE LIBRARY</span>
         <h1>课程资料</h1>
-        <p>集中浏览课程讲义、习题与参考资料，支持在线预览和原文件下载。</p>
+        <p>按年级、科目和资料类型逐层浏览，也可以直接搜索全部文件。</p>
       </div>
       <div class="materials-stats" aria-label="资料统计">
         <strong><%= page.resources.length %></strong>
@@ -12,60 +12,22 @@
       </div>
     </header>
 
-    <section class="materials-toolbar" aria-label="筛选课程资料">
-      <label class="materials-search">
-        <span aria-hidden="true">⌕</span>
-        <span class="sr-only">搜索资料</span>
-        <input id="materials-search" type="search" placeholder="搜索课程或文件名…" autocomplete="off">
-      </label>
-      <label>
-        <span class="sr-only">按课程筛选</span>
-        <select id="materials-course">
-          <option value="">全部课程</option>
-          <% page.courses.forEach(function(course) { %>
-            <option value="<%= course %>"><%= course %></option>
-          <% }) %>
-        </select>
-      </label>
-      <label>
-        <span class="sr-only">按文件类型筛选</span>
-        <select id="materials-type">
-          <option value="">全部类型</option>
-          <% page.types.forEach(function(type) { %>
-            <option value="<%= type %>"><%= type %></option>
-          <% }) %>
-        </select>
-      </label>
-    </section>
-
     <% if (page.resources.length) { %>
-      <div class="materials-grid" id="materials-grid">
-        <% page.resources.forEach(function(resource) { %>
-          <section class="material-card" data-title="<%= resource.title.toLowerCase() %>" data-course="<%= resource.course %>" data-type="<%= resource.extension %>">
-            <div class="material-card-top">
-              <span class="material-file-badge material-file-<%= resource.extension.toLowerCase() %>"><%= resource.extension %></span>
-              <span class="material-course"><%= resource.course %></span>
-            </div>
-            <h2 title="<%= resource.filename %>"><%= resource.title %></h2>
-            <div class="material-meta">
-              <span><%= resource.size %></span>
-              <span>更新于 <%= resource.updated %></span>
-            </div>
-            <div class="material-actions">
-              <% if (resource.previewType) { %>
-                <button class="material-preview" type="button" data-url="<%= resource.url %>" data-preview="<%= resource.previewType %>" data-name="<%= resource.filename %>">在线预览</button>
-              <% } else { %>
-                <span class="material-preview-unavailable">暂不支持预览</span>
-              <% } %>
-              <a class="material-download" href="<%= resource.url %>" download>下载</a>
-            </div>
-          </section>
-        <% }) %>
-      </div>
+      <section class="materials-toolbar is-browser-toolbar" aria-label="搜索课程资料">
+        <label class="materials-search">
+          <span aria-hidden="true">⌕</span>
+          <span class="sr-only">搜索资料</span>
+          <input id="materials-search" type="search" placeholder="搜索科目或文件名…" autocomplete="off">
+        </label>
+      </section>
+
+      <nav class="materials-breadcrumb" id="materials-breadcrumb" aria-label="当前位置"></nav>
+      <div id="materials-browser" aria-live="polite"></div>
       <div class="materials-no-result" id="materials-no-result" hidden>
         <strong>没有找到匹配的资料</strong>
-        <span>试试更换关键词或筛选条件。</span>
+        <span>试试更换关键词，或返回上一级文件夹。</span>
       </div>
+      <script id="materials-data" type="application/json"><%- JSON.stringify(page.resources).replace(/</g, '\\u003c') %></script>
     <% } else { %>
       <div class="materials-empty">
         <span class="materials-empty-icon" aria-hidden="true">＋</span>
