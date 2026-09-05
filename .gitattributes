@@ -1,1 +1,2 @@
 source/course-materials/files/大一/电磁学/课件与讲稿/zzm/EM_2026_1.pptx filter=lfs diff=lfs merge=lfs -text
+source/course-materials/files/大二/光学/教材/(Wiley[[:space:]]Series[[:space:]]in[[:space:]]Pure[[:space:]]and[[:space:]]Applied[[:space:]]Optics)[[:space:]]Bahaa[[:space:]]E.[[:space:]]A.[[:space:]]Saleh,[[:space:]]Malvin[[:space:]]Carl[[:space:]]Teich[[:space:]]-[[:space:]]Fundamentals[[:space:]]of[[:space:]]Photonics-Wiley-Blackwell[[:space:]](2019).pdf filter=lfs diff=lfs merge=lfs -text
