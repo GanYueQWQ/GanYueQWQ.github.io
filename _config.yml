@@ -106,7 +106,7 @@ deploy:
 # MathJax (hexo-filter-mathjax 服务端渲染)
 # tags: 'ams' 启用 amsmath 扩展,支持 \operatorname 等指令
 mathjax:
-  tags: ams
+  tags: all
   single_dollars: true
   append_css: true
   every_page: false
