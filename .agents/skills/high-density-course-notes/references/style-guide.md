@@ -4,7 +4,7 @@ This guide captures the style demonstrated by `复变函数A·第一章 复数�
 
 ## Editorial character
 
-The finished note reads like a compact, structured teaching text rather than a transcript. State the concept or conclusion directly, then add explanation only where notation, proof logic, physical meaning, or an application would otherwise be unclear. Tone is direct and academic, with occasional short prompts such as “问题”, “约定”, “注”, “例” or “易考点” to orient the reader.
+The finished note reads like a compact, structured teaching text rather than a transcript. State the concept or conclusion directly, then add explanation only where notation, proof logic, physical meaning, or an application would otherwise be unclear. Tone is direct and academic, with occasional short prompts such as “问题”, “约定”, “注” or “例” to orient the reader.
 
 The desired density is “one idea per short paragraph”. Prefer formulas, short lists, and precise relationships over continuous exposition. Remove broad scene-setting, repeated transitions, and conclusions already obvious from the formula, but do not shorten away a condition that changes the result.
 
@@ -12,7 +12,7 @@ The desired density is “one idea per short paragraph”. Prefer formulas, shor
 
 - Begin with valid Hexo YAML frontmatter when publishing to this blog: `title`, `date`, `categories`, `tags`, and `mathjax: true`.
 - Preserve the hierarchy of the selected textbook or official lecture sequence when it is coherent. Use `#` for a chapter-level block, `##` for a section, and `###` or `####` for a focused law, phenomenon, derivation, or example.
-- Prefer the textbook's subject names, such as `几何光学的基本定律` followed by `几何光学三定律` and `反射与折射`. Keep chapter or section numbers only when they help the reader map the note to the source.
+- Prefer the textbook's subject names, such as `几何光学的基本定律` followed by `几何光学三定律` and `反射与折射`. Use descriptive heading text only: never prefix a Markdown heading with textbook-style chapter or section numbers such as `1.1`, `1.2.3`, or `第二节`.
 - Use a horizontal rule only for a genuine transition, not between every subsection.
 - Keep paragraphs short. Use lists for parallel definitions, cases, or procedures. Use a compact table when several phenomena share the same comparison dimensions, such as optical path, conditions, or observed order.
 
@@ -22,7 +22,8 @@ The desired density is “one idea per short paragraph”. Prefer formulas, shor
 - Use a blockquote for a compact takeaway, convention, warning, problem statement, or memorable interpretation. It should add navigational value rather than restate the preceding paragraph.
 - Use `\boxed{...}` sparingly for a final formula or conclusion worth locating during review.
 - Use numbered cases such as `**(1) ...**` when a result naturally splits into alternatives.
-- Use `> **易考点**：...` for a source-backed detail that is easy to overlook and naturally testable. Use `> **易错点**：...` for a sign, condition, boundary case, or conceptual distinction that commonly changes an answer. Keep both sparse and specific.
+- Do not use `> **易考点**：...`, `> 易考点：...`, `> **易错点**：...`, `> 易错点：...`, or equivalent standalone exam-tip and common-mistake labels. Put assessable details, signs, conditions, boundary cases, and conceptual distinctions directly into the surrounding explanation, derivation, or comparison.
+
 
 ## Mathematical presentation
 
@@ -30,6 +31,7 @@ The desired density is “one idea per short paragraph”. Prefer formulas, shor
 - Introduce symbols immediately before using them. State domains and exclusions such as `$z\ne0$` where they matter.
 - For a derivation, show the conceptual bridge: announce the substitution or comparison, display the meaningful steps, then state the conclusion in words.
 - Use aligned equations, cases, or implication arrows when they expose structure. Avoid an unbroken wall of algebra.
+- In Hexo Markdown, end every intended rendered line break inside `aligned`, `cases`, and similar multiline math environments with four literal backslashes (`\\\\`) in the source. Do not use the usual two-backslash source form, because this repository's rendering pipeline consumes it incorrectly.
 - Preserve LaTeX commands exactly. In particular, do not lose backslashes in commands such as `\rho`, `\bar z`, `\operatorname`, or line breaks.
 - Keep notation consistent with the teacher's convention unless it is erroneous. If a less ambiguous notation materially improves the note, explain the change once.
 

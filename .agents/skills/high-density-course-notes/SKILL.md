@@ -1,13 +1,13 @@
 ---
 name: high-density-course-notes
-description: Synthesize handwritten notes, lecture slides, and textbooks into concise, layered Chinese Markdown course notes, preserving course structure while filling essential gaps and surfacing source-backed exam points. Use especially for mathematical or physical notes intended for a Hexo blog. Do not use for verbatim transcription or a generic source summary.
+description: Synthesize handwritten notes, lecture slides, and textbooks into concise, layered Chinese Markdown course notes, preserving course structure while filling essential gaps and retaining source-backed assessment-relevant details. Use especially for mathematical or physical notes intended for a Hexo blog. Do not use for verbatim transcription or a generic source summary.
 ---
 
 # High-Density Course Notes
 
 Produce a coherent note that can replace the rough note, not parallel summaries of each source. Use the textbook or official course structure as the default hierarchy, the student's handwritten note to set emphasis, and the teacher's material to recover course-specific notation and likely assessment details.
 
-Before drafting, read [references/style-guide.md](references/style-guide.md). If the target is not Markdown or the user explicitly requests another style, preserve the content-selection principles but adapt the presentation.
+Before drafting, read [references/style-guide.md](references/style-guide.md). If the target is not Markdown or the user explicitly requests another style, preserve the content-selection principles but adapt the presentation. When the destination is a Hexo site, inspect the repository's actual Markdown and mathematics renderers before writing formulas. If it uses hexo-renderer-marked with hexo-filter-mathjax, also read and follow [references/hexo-math-rendering.md](references/hexo-math-rendering.md).
 
 ## Required source confirmation
 
@@ -36,8 +36,9 @@ If some sources are already identified or attached, name them and ask whether th
 5. Build a coverage map with five decisions: keep, expand, compress, omit, or flag as a likely assessment point. Handwritten notes control emphasis; textbooks control systematic structure; lecture materials control course-specific scope.
 6. Mine overlooked but assessable details using the criteria below. Attach each selected point to the relevant concept instead of collecting trivia in a detached appendix.
 7. Draft directly in the requested destination format. Prefer concise definitions, formulas, short lists, and comparison tables. Explain only the non-obvious step where a learner is likely to hesitate.
-8. Audit every definition, theorem, proof, formula, example, and exam-point callout against the sources. Check domains, quantifiers, exceptional cases, notation, equation references, and LaTeX integrity.
-9. Perform an editorial compression pass. Remove duplicated explanation, routine arithmetic, decorative prose, broad motivation, and examples that teach no new method.
+8. Audit every definition, theorem, proof, formula, example, and assessment-relevant detail against the sources. Check domains, quantifiers, exceptional cases, notation, equation references, and LaTeX integrity.
+9. For a Hexo destination, build the real site and inspect the generated page for raw math delimiters, Markdown tags inside formulas, and MathJax errors. A successful build alone does not prove that formulas rendered.
+10. Perform an editorial compression pass. Remove duplicated explanation, routine arithmetic, decorative prose, broad motivation, and examples that teach no new method.
 
 ## Finding likely assessment points
 
@@ -49,7 +50,9 @@ Actively inspect material that is easy to skim but suitable for an exam question
 - a textbook remark, footnote, figure caption, table entry, or nearby consequence that changes how a standard result is applied;
 - a short derivation that connects two named results, or a counterexample showing why a condition is necessary.
 
-Include only points supported by the agreed sources. Do not predict an exam from topic importance alone. Mark a point compactly as `> **易考点**：...` or `> **易错点**：...` when the label adds value; state the exact condition, contrast, or calculation move that could be tested. Use these callouts selectively rather than decorating every subsection.
+Include only points supported by the agreed sources. Do not predict an exam from topic importance alone. Preserve useful conditions, contrasts, calculation moves, sign conventions, failure cases, and misconceptions by integrating them directly into the relevant definition, derivation, comparison, or example in neutral academic prose.
+
+Never generate `> **易考点**：...`, `> 易考点：...`, `> **易错点**：...`, `> 易错点：...`, or any equivalent standalone exam-tip or common-mistake label.
 
 ## Content standard
 
@@ -64,4 +67,4 @@ Include only points supported by the agreed sources. Do not predict an exam from
 
 ## Completion check
 
-Before returning the note, confirm that the agreed references were actually used, its hierarchy remains traceable to the course or textbook, likely assessment details were considered, and every exam-point label is source-backed. Also confirm that there are no unexplained symbols, missing theorem conditions, malformed LaTeX commands, accidental duplication, or examples left half-solved. If writing into a repository, preserve unrelated edits and follow the project's existing frontmatter and filename conventions.
+Before returning the note, confirm that the agreed references were actually used, its hierarchy remains traceable to the course or textbook, and relevant assessment details were integrated into the body without standalone exam-tip or common-mistake labels. Also confirm that there are no unexplained symbols, missing theorem conditions, malformed LaTeX commands, accidental duplication, or examples left half-solved. For Hexo output, confirm that representative inline, display, aligned, and boxed formulas render in the generated HTML with no raw double-dollar delimiters, Markdown emphasis tags inside math, or MathJax error nodes. If writing into a repository, preserve unrelated edits and follow the project's existing frontmatter and filename conventions.
