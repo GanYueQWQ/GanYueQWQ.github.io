@@ -105,10 +105,15 @@ deploy:
 
 # MathJax (hexo-filter-mathjax 服务端渲染)
 # tags: 'ams' 启用 amsmath 扩展,支持 \operatorname 等指令
+# packages 里必须显式列出笔记用到的每一个包。没列出的包只能靠 autoload 扩展
+# 首次遇到时惰性加载,而那是异步的:hexo 并行渲染文章时,先渲染到该宏的文章能加载成功,
+# 同时进行的其它文章会在包注册完成前解析到它,报 Undefined control sequence。
+# \boldsymbol 属于 [tex]/boldsymbol,不在 base/ams 里,必须在此预加载。
 mathjax:
   tags: all
   packages:
     - ams
+    - boldsymbol
   single_dollars: true
   append_css: true
   every_page: false
