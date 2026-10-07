@@ -1,0 +1,7 @@
+interface:
+  display_name: "经济学与社科分析（中文）"
+  short_description: "让中文经济学分析的论证结构与来源核实站得住。"
+  brand_color: "#1F6F5C"
+  default_prompt: "Use $econ-journal-zh to check this draft's game-theory structure and source verification."
+policy:
+  allow_implicit_invocation: true
