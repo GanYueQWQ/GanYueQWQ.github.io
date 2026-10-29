@@ -14,7 +14,7 @@
   "dependencies": {
     "docx-preview": "^0.3.7",
     "hexo": "^8.0.0",
-    "hexo-component-inferno": "^3.1.2",
+    "hexo-component-inferno": "^5.1.0",
     "hexo-filter-mathjax": "^0.11.1",
     "hexo-generator-archive": "^2.0.0",
     "hexo-generator-category": "^2.0.0",
